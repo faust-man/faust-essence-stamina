@@ -1,0 +1,12 @@
+plugins {
+    id 'base'
+    id 'fabric-loom' version '1.8.13' apply false
+    id 'net.neoforged.moddev' version '2.0.49-beta' apply false
+}
+subprojects {
+    version = rootProject.version
+    group = 'com.faust.stamina'
+    repositories { mavenCentral(); maven { url='https://maven.parchmentmc.org/' } }
+}
+ext.coreProjectDir = file(providers.gradleProperty('coreProjectDir').getOrElse('../core'))
+tasks.named('build') { dependsOn ':neoforge:build', ':fabric:build' }
