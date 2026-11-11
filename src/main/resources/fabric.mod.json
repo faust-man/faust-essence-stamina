@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "fauststamina",
   "version": "${version}",
-  "name": "Faust Essence: Stamina",
+  "name": "essence_stamina",
   "environment": "*",
   "depends": {
     "fabricloader": ">=0.16.9",
@@ -13,5 +13,10 @@
   "license": "CC0-1.0 AND Apache-2.0",
   "mixins": [
     "fauststamina.mixins.json"
-  ]
+  ],
+  "entrypoints": {
+    "modmenu": [
+      "com.faust.stamina.client.StaminaModMenu"
+    ]
+  }
 }
