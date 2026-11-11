@@ -33,7 +33,7 @@ public final class StaminaModel implements StaminaMechanics {
             case 2 -> {b.ability("armor_familiarity",Skill.defense,5,"armor_metres",500,"","capacity",2);}
             case 3 -> {b.ability("armor_mastery",Skill.defense,15,"armor_metres",2000,"armor_familiarity","capacity",4);}
             case 4 -> {b.stat("constitution_stamina",Skill.constitution,"max_health","add",1,1,1e9,false);b.statBonuses.getLast().attribute="faustcore:stamina";}
-            case 5 -> {b.ability("shield_efficiency",Skill.defense,8,"blocks",60,"shield_care","shield_cost_reduction",2);}
+            case 5 -> {b.ability("shield_efficiency",Skill.defense,8,"blocks",60,"shield_care","shield_cost_reduction",1);}
             case 6 -> {b.ability("resilient_recovery",Skill.constitution,10,"constitution_run_metres",5000,"second_wind","exhaustion_threshold_reduction",0.5);}
             case 7 -> {b.ability("bow_efficiency",Skill.dexterity,5,"bow_shots",30,"","bow_cost_reduction",1);}
             case 8 -> {b.ability("bow_mastery",Skill.dexterity,10,"bow_shots",150,"bow_efficiency","bow_cost_reduction",1);}
