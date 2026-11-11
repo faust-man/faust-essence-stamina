@@ -13,3 +13,5 @@ dependencies {
 }
 processResources { filesMatching('META-INF/neoforge.mods.toml') { expand(version: project.version) } }
 jar { from(rootProject.file('LICENSE')) }
+
+sourceSets.main.java.exclude '**/StaminaModMenu.java'

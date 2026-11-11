@@ -12,3 +12,6 @@ dependencies {
 processResources { filesMatching('fabric.mod.json') { expand(version: project.version) } }
 loom { mixin { defaultRefmapName.set('fauststamina.refmap.json') } }
 jar { from(rootProject.file('LICENSE')) }
+
+repositories { maven { url = providers.gradleProperty('coreModMenuRepository').getOrElse('https://maven.terraformersmc.com/releases/') } }
+dependencies { modCompileOnly 'com.terraformersmc:modmenu:11.0.3' }
