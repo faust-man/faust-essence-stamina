@@ -19,3 +19,10 @@ side="BOTH"
 
 [[mixins]]
 config="fauststamina.mixins.json"
+
+[[dependencies.fauststamina]]
+modId="essence_api"
+type="required"
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="BOTH"

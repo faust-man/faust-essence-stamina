@@ -1,4 +1,6 @@
 package com.faust.stamina;
+import com.faust.essence.api.Skill;
+
 import com.faust.core.progression.*;
 
 /** Resource rules extracted from the original core model; saved IDs and units are unchanged. */
@@ -29,16 +31,16 @@ public final class StaminaModel implements StaminaMechanics {
 
     @Override public void defaults(Balance b,int stage) {
         switch(stage) {
-            case 1 -> {b.ability("second_wind",Skill.constitution,5,"damage_taken",50,"","second_wind",1);}
-            case 2 -> {b.ability("armor_familiarity",Skill.defense,5,"armor_metres",500,"","capacity",2);}
-            case 3 -> {b.ability("armor_mastery",Skill.defense,15,"armor_metres",2000,"armor_familiarity","capacity",4);}
-            case 4 -> {b.stat("constitution_stamina",Skill.constitution,"max_health","add",1,1,1e9,false);b.statBonuses.getLast().attribute="faustcore:stamina";}
-            case 5 -> {b.ability("shield_efficiency",Skill.defense,8,"blocks",60,"shield_care","shield_cost_reduction",1);}
-            case 6 -> {b.ability("resilient_recovery",Skill.constitution,10,"constitution_run_metres",5000,"second_wind","exhaustion_threshold_reduction",0.5);}
-            case 7 -> {b.ability("bow_efficiency",Skill.dexterity,5,"bow_shots",30,"","bow_cost_reduction",1);}
-            case 8 -> {b.ability("bow_mastery",Skill.dexterity,10,"bow_shots",150,"bow_efficiency","bow_cost_reduction",1);}
-            case 9 -> {b.ability("crossbow_efficiency",Skill.strength,5,"crossbow_shots",30,"","crossbow_cost_reduction",1);}
-            case 10 -> {b.ability("mace_efficiency",Skill.strength,10,"mace_hits",50,"training_strength_damage","mace_cost_reduction",1);}
+            case 1 -> {b.ability("second_wind",Skill.valueOf("constitution"),5,"damage_taken",50,"","second_wind",1);}
+            case 2 -> {b.ability("armor_familiarity",Skill.valueOf("defense"),5,"armor_metres",500,"","capacity",2);}
+            case 3 -> {b.ability("armor_mastery",Skill.valueOf("defense"),15,"armor_metres",2000,"armor_familiarity","capacity",4);}
+            case 4 -> {b.stat("constitution_stamina",Skill.valueOf("constitution"),"max_health","add",1,1,1e9,false);b.statBonuses.getLast().attribute="faustcore:stamina";}
+            case 5 -> {b.ability("shield_efficiency",Skill.valueOf("defense"),8,"blocks",60,"shield_care","shield_cost_reduction",1);}
+            case 6 -> {b.ability("resilient_recovery",Skill.valueOf("constitution"),10,"constitution_run_metres",5000,"second_wind","exhaustion_threshold_reduction",0.5);}
+            case 7 -> {b.ability("bow_efficiency",Skill.valueOf("dexterity"),5,"bow_shots",30,"","bow_cost_reduction",1);}
+            case 8 -> {b.ability("bow_mastery",Skill.valueOf("dexterity"),10,"bow_shots",150,"bow_efficiency","bow_cost_reduction",1);}
+            case 9 -> {b.ability("crossbow_efficiency",Skill.valueOf("strength"),5,"crossbow_shots",30,"","crossbow_cost_reduction",1);}
+            case 10 -> {b.ability("mace_efficiency",Skill.valueOf("strength"),10,"mace_hits",50,"training_strength_damage","mace_cost_reduction",1);}
             default -> {}
         }
     }
@@ -46,7 +48,7 @@ public final class StaminaModel implements StaminaMechanics {
     @Override public double baseStamina(Progress p, Balance b) {return b.stamina.get("base")+SkillEffects.attribute(p,b,"faustcore:stamina",false)+p.effect("stamina",b);}
     @Override public double maxFatigue(Progress p, Balance b) {double total=p.baseStamina(b),bonus=Math.max(0,total-b.stamina.get("base"));return Math.max(0,Math.min(total-b.fatigue.get("minimum"),b.fatigue.get("maximum")+bonus));}
     @Override public double maxStamina(Progress p, Balance b) {return Math.max(b.fatigue.get("minimum"),p.baseStamina(b)-(b.fatigue.get("enabled")>0?Math.max(0,Math.min(p.fatigue,p.maxFatigue(b))):0));}
-    @Override public double capacity(Progress p, Balance b) {return b.armor.get("baseCapacity")+p.track(Skill.defense).level*b.armor.get("capacityPerLevel")+p.effect("capacity",b);}
+    @Override public double capacity(Progress p, Balance b) {return b.armor.get("baseCapacity")+p.track(Skill.valueOf("defense")).level*b.armor.get("capacityPerLevel")+p.effect("capacity",b);}
     @Override public double spend(Progress p, double requested,Balance b) {return p.spend(requested,b,Long.MAX_VALUE);}
     @Override public double spend(Progress p, double requested,Balance b,long worldAgeTicks) {
         if(b.stamina.get("enabled")==0||!Double.isFinite(requested)||requested<=0) return 0;
