@@ -27,6 +27,8 @@ public final class StaminaHud implements StaminaClient {
     for(int py=0;py<8;py++)for(int px=0;px<4;px++) {
      int pixel=StaminaSprites.pixel(half*4+px,py,state,color);
      if(pixel!=0)g.fill(dx+px,dy+py,dx+px+1,dy+py+1,pixel);
+     int overlay=StaminaSprites.overlay(half*4+px,py,state);
+     if(overlay!=0)g.fill(dx+px,dy+py,dx+px+1,dy+py+1,overlay);
     }
    }
   } finally {

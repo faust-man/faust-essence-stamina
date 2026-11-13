@@ -11,23 +11,29 @@ public final class StaminaSprites {
 
     private StaminaSprites() {}
 
-    // Native GUI pixels: outline and shine stay neutral under every layer tint.
-    private static final String[] MASK = {
-        "00001100", "00011100", "00111000", "01111110",
-        "01111100", "00011000", "00011000", "00010000"
+    // Native 8x8 geometry: O outline, H translucent shine, S translucent shadow.
+    private static final String[] PIXELS = {
+        "..OOOOO.", ".OHBBSO.", ".OHBSO..", "OHBBOOO.",
+        "OHBBHSO.", "OOOHSO..", "..OHO...", "..OO...."
     };
-    private static boolean solid(int x, int y) {
-        return x >= 0 && x < SIZE && y >= 0 && y < SIZE && MASK[y].charAt(x) == '1';
+    private static char part(int x, int y) {
+        return x >= 0 && x < SIZE && y >= 0 && y < SIZE ? PIXELS[y].charAt(x) : '.';
     }
-    /** Zero is transparent. Fatigue remains entirely black, including its highlight. */
+    /** Base pigment. Shine and shadow are independent translucent overlays. */
     public static int pixel(int x, int y, int state, int color) {
-        if (!solid(x, y)) return 0;
+        char part = part(x, y);
+        if (part == '.') return 0;
         if (state == 2) return FATIGUE_COLOR;
-        boolean edge = !solid(x-1,y) || !solid(x+1,y) || !solid(x,y-1) || !solid(x,y+1);
-        if (edge) return 0xFF181818;
-        if (state == 1) return EMPTY_COLOR;
-        if (!solid(x-1,y-1)) return 0xFFFFF3CF;
-        return color;
+        if (part == 'O') return 0xFF241F2D;
+        return state == 1 ? EMPTY_COLOR : color;
+    }
+    public static int overlay(int x, int y, int state) {
+        if (state != 0) return 0;
+        return switch(part(x, y)) {
+            case 'H' -> 0x80FFFFCC;
+            case 'S' -> 0x50000000;
+            default -> 0;
+        };
     }
 
     /** 0 = filled, 1 = spent, 2 = unavailable due to fatigue. */
