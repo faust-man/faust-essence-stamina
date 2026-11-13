@@ -11,6 +11,7 @@
   ],
   "client": [
     "GuiMixin",
+    "OverflowingToughnessMixin",
     "AirHudMixin",
     "LocalPlayerMixin"
   ],

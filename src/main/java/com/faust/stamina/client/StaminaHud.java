@@ -19,16 +19,19 @@ public final class StaminaHud implements StaminaClient {
   com.mojang.blaze3d.systems.RenderSystem.enableBlend();
   boolean exhausted=progress.actionsBlocked(balance);
   try {
-   for(int unit=0;unit<total;unit++) {
+   boolean compact=OverflowingBarsCompat.enabled();
+   for(int unit=0;unit<(compact?StaminaLayers.units(total):total);unit++) {
     int icon=unit/2,half=unit%2,dx=x+(icon%10)*8+half*4,dy=y-(icon/10)*9;
-    int state=StaminaSprites.state(unit,available,filled),color=StaminaSprites.color(state,exhausted);
+    int state=compact?StaminaLayers.state(unit,total,available,filled):StaminaSprites.state(unit,available,filled),color=StaminaSprites.color(state,exhausted);
+    if(compact&&state==0&&!exhausted)color=OverflowingBarsCompat.color(StaminaLayers.layer(filled),StaminaLayers.absoluteUnit(unit,filled)/20==StaminaLayers.layer(filled));
     g.setColor(((color>>16)&255)/255f,((color>>8)&255)/255f,(color&255)/255f,1f);
     var texture=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("faustcore",StaminaSprites.texture(state));
-    g.blit(texture,dx,dy,4,8,StaminaSprites.textureX(state,half),0,8,16,16,16);
+    g.blit(texture,dx,dy,4,8,StaminaSprites.textureX(state,half),0,4,8,8,8);
    }
   } finally {
    g.setColor(1f,1f,1f,1f);
   }
+  if(OverflowingBarsCompat.enabled())OverflowingBarsCompat.count(g,x+82,y,filled,mc.font);
 
  }
 }

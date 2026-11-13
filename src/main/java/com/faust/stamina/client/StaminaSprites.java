@@ -1,8 +1,8 @@
 package com.faust.stamina.client;
 
-/** Neutral 16px lightning masks, tinted independently for each half-unit. */
+/** Neutral 8px lightning masks, tinted independently for each half-unit. */
 public final class StaminaSprites {
-    public static final int SIZE = 16;
+    public static final int SIZE = 8;
     public static final int GUI_SIZE = 8;
     public static final int STAMINA_COLOR = 0xFFFFD000;
     public static final int FATIGUE_COLOR = 0xFF000000;
