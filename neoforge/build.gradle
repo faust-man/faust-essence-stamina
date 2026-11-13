@@ -15,3 +15,5 @@ processResources { filesMatching('META-INF/neoforge.mods.toml') { expand(version
 jar { from(rootProject.file('LICENSE')) }
 
 sourceSets.main.java.exclude '**/StaminaModMenu.java'
+
+dependencies { compileOnly files(new File(rootProject.file(providers.gradleProperty('apiProjectDir').getOrElse('../faust-essence-api')), 'neoforge/build/libs/essence-api-neoforge-1.21.1-1.0.0.jar')) }

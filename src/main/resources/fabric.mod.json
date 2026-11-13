@@ -8,7 +8,8 @@
     "fabricloader": ">=0.16.9",
     "minecraft": "1.21.1",
     "java": ">=21",
-    "faustcore": ">=1.6.0"
+    "faustcore": ">=1.6.0",
+    "essence_api": ">=1.0.0"
   },
   "license": "CC0-1.0 AND Apache-2.0",
   "mixins": [

@@ -15,3 +15,5 @@ jar { from(rootProject.file('LICENSE')) }
 
 repositories { maven { url = providers.gradleProperty('coreModMenuRepository').getOrElse('https://maven.terraformersmc.com/releases/') } }
 dependencies { modCompileOnly 'com.terraformersmc:modmenu:11.0.3' }
+
+dependencies { modImplementation files(new File(rootProject.file(providers.gradleProperty('apiProjectDir').getOrElse('../faust-essence-api')), 'fabric/build/libs/essence-api-fabric-1.21.1-1.0.0.jar')) }

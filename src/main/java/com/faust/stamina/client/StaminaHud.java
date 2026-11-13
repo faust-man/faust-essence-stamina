@@ -1,4 +1,6 @@
 package com.faust.stamina.client;
+import com.faust.essence.api.client.StaminaClient;
+
 import com.faust.core.client.*;
 import com.faust.core.progression.*;
 import static com.faust.core.client.CoreClient.*;
@@ -24,10 +26,11 @@ public final class StaminaHud implements StaminaClient {
     int icon=unit/2,half=unit%2,dx=x+(icon%10)*8+half*4,dy=y-(icon/10)*10;
     int state=compact?StaminaLayers.state(unit,total,available,filled):StaminaSprites.state(unit,available,filled),color=StaminaSprites.color(state,exhausted&&!(compact&&StaminaLayers.beyondCapacity(unit,total,filled)));
     if(compact&&state==0&&!exhausted)color=OverflowingBarsCompat.color(StaminaLayers.layer(filled),StaminaLayers.absoluteUnit(unit,filled)/20==StaminaLayers.layer(filled));
+    boolean hollow=state==1&&(!compact||StaminaLayers.layer(filled)==0);
     for(int py=0;py<StaminaSprites.SIZE;py++)for(int px=0;px<(half==0?4:5);px++) {
-     int pixel=StaminaSprites.pixel(half*4+px,py,state,color);
+     int pixel=hollow?StaminaSprites.hollowPixel(half*4+px,py,exhausted?StaminaSprites.EXHAUSTED_COLOR:0xFF211D29):StaminaSprites.pixel(half*4+px,py,state,color);
      if(pixel!=0)g.fill(dx+px,dy+py,dx+px+1,dy+py+1,pixel);
-     int overlay=StaminaSprites.overlay(half*4+px,py,state);
+     int overlay=hollow?0:StaminaSprites.overlay(half*4+px,py,state);
      if(overlay!=0)g.fill(dx+px,dy+py,dx+px+1,dy+py+1,overlay);
     }
    }

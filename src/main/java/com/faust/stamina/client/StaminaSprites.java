@@ -26,6 +26,7 @@ public final class StaminaSprites {
         if (part == 'O') return state == 1 && color == EMPTY_COLOR ? 0xFF09090B : 0xFF211D29;
         return state == 2 ? FATIGUE_COLOR : color;
     }
+    public static int hollowPixel(int x,int y,int color){return part(x,y)=='O'?color:0;}
     public static int overlay(int x, int y, int state) {
         return switch(part(x, y)) {
             case 'H' -> state == 1 ? 0x10FFFFFF : 0x60FFFFFF;
