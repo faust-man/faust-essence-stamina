@@ -22,7 +22,7 @@ public final class StaminaHud implements StaminaClient {
    boolean compact=OverflowingBarsCompat.enabled();
    for(int unit=0;unit<(compact?StaminaLayers.units(total):total);unit++) {
     int icon=unit/2,half=unit%2,dx=x+(icon%10)*8+half*4,dy=y-(icon/10)*10;
-    int state=compact?StaminaLayers.state(unit,total,available,filled):StaminaSprites.state(unit,available,filled),color=StaminaSprites.color(state,exhausted);
+    int state=compact?StaminaLayers.state(unit,total,available,filled):StaminaSprites.state(unit,available,filled),color=StaminaSprites.color(state,exhausted&&!(compact&&StaminaLayers.beyondCapacity(unit,total,filled)));
     if(compact&&state==0&&!exhausted)color=OverflowingBarsCompat.color(StaminaLayers.layer(filled),StaminaLayers.absoluteUnit(unit,filled)/20==StaminaLayers.layer(filled));
     for(int py=0;py<StaminaSprites.SIZE;py++)for(int px=0;px<(half==0?4:5);px++) {
      int pixel=StaminaSprites.pixel(half*4+px,py,state,color);
