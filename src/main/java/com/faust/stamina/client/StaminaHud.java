@@ -19,16 +19,22 @@ public final class StaminaHud implements StaminaClient {
   com.mojang.blaze3d.systems.RenderSystem.enableBlend();
   boolean exhausted=progress.actionsBlocked(balance);
   try {
-   for(int unit=0;unit<total;unit++) {
-    int icon=unit/2,half=unit%2,dx=x+(icon%10)*8+half*4,dy=y-(icon/10)*9;
-    int state=StaminaSprites.state(unit,available,filled),color=StaminaSprites.color(state,exhausted);
-    g.setColor(((color>>16)&255)/255f,((color>>8)&255)/255f,(color&255)/255f,1f);
-    var texture=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("faustcore",StaminaSprites.texture(state));
-    g.blit(texture,dx,dy,4,8,StaminaSprites.textureX(state,half),0,8,16,16,16);
+   boolean compact=OverflowingBarsCompat.enabled();
+   for(int unit=0;unit<(compact?StaminaLayers.units(total):total);unit++) {
+    int icon=unit/2,half=unit%2,dx=x+(icon%10)*8+half*4,dy=y-(icon/10)*10;
+    int state=compact?StaminaLayers.state(unit,total,available,filled):StaminaSprites.state(unit,available,filled),color=StaminaSprites.color(state,exhausted&&!(compact&&StaminaLayers.beyondCapacity(unit,total,filled)));
+    if(compact&&state==0&&!exhausted)color=OverflowingBarsCompat.color(StaminaLayers.layer(filled),StaminaLayers.absoluteUnit(unit,filled)/20==StaminaLayers.layer(filled));
+    for(int py=0;py<StaminaSprites.SIZE;py++)for(int px=0;px<(half==0?4:5);px++) {
+     int pixel=StaminaSprites.pixel(half*4+px,py,state,color);
+     if(pixel!=0)g.fill(dx+px,dy+py,dx+px+1,dy+py+1,pixel);
+     int overlay=StaminaSprites.overlay(half*4+px,py,state);
+     if(overlay!=0)g.fill(dx+px,dy+py,dx+px+1,dy+py+1,overlay);
+    }
    }
   } finally {
    g.setColor(1f,1f,1f,1f);
   }
+  if(OverflowingBarsCompat.enabled())OverflowingBarsCompat.count(g,x+82,y,filled,mc.font);
 
  }
 }
