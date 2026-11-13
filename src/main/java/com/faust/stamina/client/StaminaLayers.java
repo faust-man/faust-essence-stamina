@@ -12,7 +12,7 @@ public final class StaminaLayers {
     }
     public static int state(int slot, int total, int available, int filled) {
         int start = layer(filled) * 20;
-        if (start + slot >= available && start + slot < total) return 2;
+        if (available < total && start + slot >= available) return 2;
         return absoluteUnit(slot, filled) < filled ? 0 : 1;
     }
 }

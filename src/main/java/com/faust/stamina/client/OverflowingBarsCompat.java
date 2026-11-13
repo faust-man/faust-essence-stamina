@@ -29,7 +29,7 @@ public final class OverflowingBarsCompat {
             Object health = CONFIG.getClass().getField("health").get(CONFIG);
             inverse = health.getClass().getField("inverseColoring").getBoolean(health);
         } catch (ReflectiveOperationException failure) { throw new IllegalStateException(failure); }
-        return top != inverse ? 0xFFE9801C : 0xFFFF0000;
+        return StaminaSprites.layerColor(layer, top, inverse);
     }
     public static void count(GuiGraphics g, int x, int y, int filled, Font font) {
         if (filled <= 20) return;

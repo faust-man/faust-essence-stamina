@@ -24,9 +24,10 @@ public final class StaminaHud implements StaminaClient {
     int icon=unit/2,half=unit%2,dx=x+(icon%10)*8+half*4,dy=y-(icon/10)*9;
     int state=compact?StaminaLayers.state(unit,total,available,filled):StaminaSprites.state(unit,available,filled),color=StaminaSprites.color(state,exhausted);
     if(compact&&state==0&&!exhausted)color=OverflowingBarsCompat.color(StaminaLayers.layer(filled),StaminaLayers.absoluteUnit(unit,filled)/20==StaminaLayers.layer(filled));
-    g.setColor(((color>>16)&255)/255f,((color>>8)&255)/255f,(color&255)/255f,1f);
-    var texture=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("faustcore",StaminaSprites.texture(state));
-    g.blit(texture,dx,dy,4,8,StaminaSprites.textureX(state,half),0,4,8,8,8);
+    for(int py=0;py<8;py++)for(int px=0;px<4;px++) {
+     int pixel=StaminaSprites.pixel(half*4+px,py,state,color);
+     if(pixel!=0)g.fill(dx+px,dy+py,dx+px+1,dy+py+1,pixel);
+    }
    }
   } finally {
    g.setColor(1f,1f,1f,1f);
