@@ -1,3 +1,7 @@
+Имена итоговых файлов: `essence-core-<loader>-1.21.1-1.6.0.jar`,
+`essence-stamina-<loader>-1.21.1-1.6.0.jar`, `essence-compat-epic-fight-1.21.1-1.6.0.jar`.
+При обновлении удаляйте прежние JAR с префиксом faust, чтобы не установить мод дважды.
+
 Правки: зельеварение требует 30 зелий и даёт +2% длительности за уровень интеллекта;
 ломание блоков даёт немного опыта строительства. Раскладка Телосложения разнесена по строкам.
 
@@ -38,8 +42,8 @@ Mod ID: `fauststamina`. Требуется [Faust Essence](https://github.com/fa
 Fabric требует Fabric API через зависимость ядра. NeoForge: 21.1.80 или новее
 совместимой ветки 21.1; Fabric Loader: 0.16.9 или новее.
 
-- `fabric/build/libs/fauststamina-fabric-1.21.1-1.6.0.jar`
-- `neoforge/build/libs/fauststamina-neoforge-1.21.1-1.6.0.jar`
+- `fabric/build/libs/essence-stamina-fabric-1.21.1-1.6.0.jar`
+- `neoforge/build/libs/essence-stamina-neoforge-1.21.1-1.6.0.jar`
 
 ## Сборка и проверки
 
